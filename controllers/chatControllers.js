@@ -106,8 +106,7 @@ const getMessaged = async (req, res) => {
 
     res.status(200).json({ message: result.message });
   } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    res.status(500).json({ error: "Error interno del servidor", message: error.message });
   }
 };
 
