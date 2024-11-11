@@ -17,7 +17,7 @@ const actionHandlers = {
     const validationError = validateData(data, ["nombre"]);
     if (validationError) return { error: validationError };
     console.log(data);
-    await axios.post("http://coloquio-backend.vercel.app/api/clients", {
+    await axios.post("https://coloquio-backend.vercel.app/api/clients", {
       nombre: data.nombre,
       apellido: data.apellido || "",
     });
@@ -35,12 +35,12 @@ const actionHandlers = {
     console.log("apellidoMayus:", apellidoMayus);
     console.log("nuevo nombre:", data.newNombre);
     console.log("nuevo apellido:", data.newApellido || "");
-    const response = await axios.get(`http://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
+    const response = await axios.get(`https://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
     const cliente = response.data[0];
     console.log("cliente:", cliente);
     if (!cliente) return { error: "Cliente no encontrado" };
 
-    await axios.put(`http://coloquio-backend.vercel.app/api/clients/${cliente.id}`, {
+    await axios.put(`https://coloquio-backend.vercel.app/api/clients/${cliente.id}`, {
       nombre: data.newNombre,
       apellido: data.newApellido || "",
     });
@@ -53,12 +53,12 @@ const actionHandlers = {
     const nombreMayus = data.nombreCliente.toUpperCase();
     const apellidoMayus = data.apellidoCliente.toUpperCase();
 
-    const response = await axios.get(`http://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
+    const response = await axios.get(`https://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
     const cliente = response.data[0];
     const cuentaCorrienteId = cliente?.Cuenta_Corriente[0]?.id;
     if (!cuentaCorrienteId) return { error: "Cuenta corriente no encontrada para el cliente" };
 
-    await axios.post("http://coloquio-backend.vercel.app/api/remito", {
+    await axios.post("https://coloquio-backend.vercel.app/api/remito", {
       importe: parseInt(data.importe),
       fecha: data.fecha,
       cuentaCorrienteId,
@@ -73,12 +73,12 @@ const actionHandlers = {
     const nombreMayus = data.nombreCliente.toUpperCase();
     const apellidoMayus = data.apellidoCliente.toUpperCase();
 
-    const response = await axios.get(`http://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
+    const response = await axios.get(`https://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
     const cliente = response.data[0];
     const cuentaCorrienteId = cliente?.Cuenta_Corriente[0]?.id;
     if (!cuentaCorrienteId) return { error: "Cuenta corriente no encontrada para el cliente" };
 
-    await axios.post("http://coloquio-backend.vercel.app/api/entregas", {
+    await axios.post("https://coloquio-backend.vercel.app/api/entregas", {
       total: parseInt(data.total),
       cuentaCorrienteId,
     });
