@@ -83,6 +83,13 @@ const actionHandlers = {
       cuentaCorrienteId,
     });
     return { message: `Entrega agregada: Total ${data.total}` };
+  },
+  obtener_todos_los_clientes: async (data) => {
+    const validationError = validateData(data, ["{}"]);
+    if (validationError) return { error: validationError };
+
+    const response = await axios.get("https://coloquio-backend.vercel.app/api/clients");
+    return { message: `Estos son los clientes: ${JSON.stringify(response.data)}` };
   }
 };
 
