@@ -12,9 +12,10 @@ const getMessaged = async (message) => {
    - Para agregar un cliente: {"action": "agregar_cliente", "data": {"nombre": "Juan", "apellido": ""}}
    - Para actualizar un cliente: {"action": "update_cliente", "data": {"nombreCliente": "Juan", "apellidoCliente": "Checo || "", "newNombre": "Juanito", "newApellido": "Perez || "", }}
    - Para agregar un remito: {"action": "agregar_remito", "data": {"importe": "15000", "fecha": "24/10/2024", "nombreCliente": "Juan", "apellidoCliente": ""}}
-   - Para agregar una entrega: {"action": "agregar_entrega", "data": {"total": "10000", "nombreCliente": "Juan", "apellidoCliente": ""}}
+   - Para agregar una entrega: {"action": "agregar_entrega", "data": {"total": "10000", "nombreCliente": "Juan", "apellidoCliente": "Perez || ""}}
    - Para obtener todos los clientes: {"action": "obtener_todos_los_clientes", "data": {}}
    Para actualizar un cliente los primeros dos valores o el primer valor son los valores antiguos y los segundos son los nuevos o el primero es el nuevo.
+   El mensaje de nombre de los clientes llega por ejemplo juan perez y tenes que devolver los valores en nombreCliente como juan y apellidoCliente como perez.
    Usuario: ${message}
   `;
 

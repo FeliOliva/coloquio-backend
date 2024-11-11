@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "postinstall": "npx prisma generate",
-    "migrate": "prisma migrate deploy"
+    "migrate": "prisma migrate deploy",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",

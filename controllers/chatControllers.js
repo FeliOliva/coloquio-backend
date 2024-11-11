@@ -1,5 +1,6 @@
 const chatService = require("../services/chatServices");
 const axios = require("axios");
+const API_URL = process.env.APP_API_URL;
 
 // Función para validar los datos necesarios para cada acción
 const validateData = (data, requiredFields) => {
@@ -16,8 +17,7 @@ const actionHandlers = {
   agregar_cliente: async (data) => {
     const validationError = validateData(data, ["nombre"]);
     if (validationError) return { error: validationError };
-    console.log(data);
-    await axios.post("https://coloquio-backend.vercel.app/api/clients", {
+    await axios.post(`${API_URL}/api/clients`, {
       nombre: data.nombre,
       apellido: data.apellido || "",
     });
@@ -31,16 +31,11 @@ const actionHandlers = {
 
     const nombreMayus = data.nombreCliente.toUpperCase();
     const apellidoMayus = data.apellidoCliente.toUpperCase();
-    console.log("nombreMayus:", nombreMayus);
-    console.log("apellidoMayus:", apellidoMayus);
-    console.log("nuevo nombre:", data.newNombre);
-    console.log("nuevo apellido:", data.newApellido || "");
-    const response = await axios.get(`https://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
+    const response = await axios.get(`${API_URL}/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
     const cliente = response.data[0];
-    console.log("cliente:", cliente);
     if (!cliente) return { error: "Cliente no encontrado" };
 
-    await axios.put(`https://coloquio-backend.vercel.app/api/clients/${cliente.id}`, {
+    await axios.put(`${API_URL}/api/clients/${cliente.id}`, {
       nombre: data.newNombre,
       apellido: data.newApellido || "",
     });
@@ -53,12 +48,12 @@ const actionHandlers = {
     const nombreMayus = data.nombreCliente.toUpperCase();
     const apellidoMayus = data.apellidoCliente.toUpperCase();
 
-    const response = await axios.get(`https://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
+    const response = await axios.get(`${API_URL}/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
     const cliente = response.data[0];
     const cuentaCorrienteId = cliente?.Cuenta_Corriente[0]?.id;
     if (!cuentaCorrienteId) return { error: "Cuenta corriente no encontrada para el cliente" };
 
-    await axios.post("https://coloquio-backend.vercel.app/api/remito", {
+    await axios.post(`${API_URL}/api/remito`, {
       importe: parseInt(data.importe),
       fecha: data.fecha,
       cuentaCorrienteId,
@@ -72,13 +67,12 @@ const actionHandlers = {
 
     const nombreMayus = data.nombreCliente.toUpperCase();
     const apellidoMayus = data.apellidoCliente.toUpperCase();
-
-    const response = await axios.get(`https://coloquio-backend.vercel.app/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
+    const response = await axios.get(`${API_URL}/api/search?nombre=${nombreMayus}&apellido=${apellidoMayus || ""}`);
     const cliente = response.data[0];
     const cuentaCorrienteId = cliente?.Cuenta_Corriente[0]?.id;
     if (!cuentaCorrienteId) return { error: "Cuenta corriente no encontrada para el cliente" };
 
-    await axios.post("https://coloquio-backend.vercel.app/api/entregas", {
+    await axios.post(`${API_URL}/api/entregas`, {
       total: parseInt(data.total),
       cuentaCorrienteId,
     });
@@ -88,7 +82,7 @@ const actionHandlers = {
     const validationError = validateData(data, ["{}"]);
     if (validationError) return { error: validationError };
 
-    const response = await axios.get("https://coloquio-backend.vercel.app/api/clients");
+    const response = await axios.get(`${API_URL}/api/clients`);
     return { message: `Estos son los clientes: ${JSON.stringify(response.data)}` };
   }
 };
